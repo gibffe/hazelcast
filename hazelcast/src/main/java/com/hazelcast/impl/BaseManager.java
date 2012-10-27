@@ -1022,6 +1022,7 @@ public abstract class BaseManager {
         }
 
         T call() {
+            start:
             try {
                 node.checkNodeState();
                 onCall();
@@ -1036,7 +1037,7 @@ public abstract class BaseManager {
                         logRedo(localCall);
                         onRedo();
                         Thread.sleep(redoWaitMillis);
-                        return call();
+                        break start;
                     }
                 }
                 // now other members
@@ -1060,7 +1061,7 @@ public abstract class BaseManager {
                             onRedo();
                             //noinspection BusyWait
                             Thread.sleep(redoWaitMillis);
-                            return call();
+                            break start;
                         } else {
                             if (!onResponse(result)) {
                                 break;
