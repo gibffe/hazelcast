@@ -95,6 +95,15 @@ public abstract class CollectionClientProxy<E> extends AbstractCollection<E> {
         Call c = proxyHelper.createCall(request);
         proxyHelper.doCall(c);
     }
+    
+    public synchronized void removeItemListeners() {
+    	itemListenerManager().removeListeners(name);
+    	Packet request = proxyHelper.createRequestPacket(ClusterOperation.REMOVE_LISTENERS, null, null);
+    	Call c = proxyHelper.createCall(request);
+    	proxyHelper.doCall(c);
+    }
+    
+    
 
     private ItemListenerManager itemListenerManager() {
         return proxyHelper.getHazelcastClient().getListenerManager().getItemListenerManager();

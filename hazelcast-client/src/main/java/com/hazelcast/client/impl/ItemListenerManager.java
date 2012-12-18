@@ -27,6 +27,7 @@ import com.hazelcast.impl.DataAwareItemEvent;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,6 +59,22 @@ public class ItemListenerManager {
     public synchronized void removeListener(String name, ItemListener itemListener) {
         EntryListener entryListener = itemListener2EntryListener.remove(itemListener);
         entryListenerManager.removeListener(name, null, entryListener);
+    }
+    
+    public synchronized void removeListeners(String name) { 	
+    	Collection<EntryListener> removed = entryListenerManager.removeListeners(name);
+    	if (removed != null) {
+        	EntryListener entryListener;
+    		for (Map.Entry<ItemListener, EntryListener> e : itemListener2EntryListener.entrySet()) {
+    			for (Iterator<EntryListener> it = removed.iterator(); it.hasNext();) {
+    				entryListener = it.next();
+    				if (e.getValue().equals(entryListener)) {
+    					it.remove();
+    					itemListener2EntryListener.remove(e.getKey());
+    				}
+    			}
+    		}
+    	}
     }
 
     public Call createNewAddListenerCall(final ProxyHelper proxyHelper, boolean includeValue) {

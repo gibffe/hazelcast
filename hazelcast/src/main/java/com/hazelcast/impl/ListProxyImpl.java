@@ -158,8 +158,13 @@ public class ListProxyImpl extends AbstractList implements ListProxy, DataSerial
         factory.initialChecks();
         factory.node.blockingQueueManager.removeItemListener(queueName, itemListener);
     }
+    
+    public void removeItemListeners() {
+		factory.initialChecks();
+		factory.node.blockingQueueManager.removeItemListeners(queueName);
+	}
 
-    @Override
+	@Override
     public String toString() {
         return "List [" + getName() + "] ";
     }

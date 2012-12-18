@@ -27,6 +27,8 @@ public interface MProxy extends IMap, IRemoveAwareProxy, IGetAwareProxy, Hazelca
     void addGenericListener(Object listener, Object key, boolean includeValue, InstanceType instanceType);
 
     void removeGenericListener(Object listener, Object key);
+    
+    void removeGenericListeners(Object key);
 
     boolean containsEntry(Object key, Object value);
 

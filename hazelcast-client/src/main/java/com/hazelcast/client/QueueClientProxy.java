@@ -200,8 +200,17 @@ public class QueueClientProxy<E> extends AbstractQueue<E> implements IQueue<E> {
             proxyHelper.doCall(c);
         }
     }
+    
+    public void removeItemListeners() {
+		synchronized (lock) {
+			listenerManager().removeListeners(name);
+			Packet request = proxyHelper.createRequestPacket(ClusterOperation.REMOVE_LISTENERS, null, null);
+            Call c = proxyHelper.createCall(request);
+            proxyHelper.doCall(c);
+		}
+	}
 
-    private QueueItemListenerManager listenerManager() {
+	private QueueItemListenerManager listenerManager() {
         return proxyHelper.getHazelcastClient().getListenerManager().getQueueItemListenerManager();
     }
 }

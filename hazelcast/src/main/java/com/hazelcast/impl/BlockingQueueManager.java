@@ -792,6 +792,10 @@ public class BlockingQueueManager extends BaseManager {
             }
         }
     }
+    
+    public void removeItemListeners(final String name) {
+    	node.listenerManager.getOrCreateListenerList(name).clear();
+    }
 
     void registerListener(boolean add, String name, Data key, Address address, boolean includeValue) {
         BQ queue = getOrCreateBQ(name);

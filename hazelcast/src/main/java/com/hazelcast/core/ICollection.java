@@ -46,4 +46,9 @@ public interface ICollection<E> extends Instance {
      * @param listener item listener for this collection
      */
     void removeItemListener(ItemListener<E> listener);
+    
+    /**
+     * Removes all existing item listeners for this collection.
+     */
+    void removeItemListeners();
 }

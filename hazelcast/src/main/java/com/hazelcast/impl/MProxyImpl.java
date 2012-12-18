@@ -428,8 +428,12 @@ public class MProxyImpl extends FactoryAwareNamedProxy implements MProxy, DataSe
     public void removeGenericListener(Object listener, Object key) {
         dynamicProxy.removeGenericListener(listener, key);
     }
+    
+    public void removeGenericListeners(Object key) {
+		dynamicProxy.removeGenericListeners(key);
+	}
 
-    public void addLocalEntryListener(EntryListener entryListener) {
+	public void addLocalEntryListener(EntryListener entryListener) {
         dynamicProxy.addLocalEntryListener(entryListener);
     }
 
@@ -876,8 +880,12 @@ public class MProxyImpl extends FactoryAwareNamedProxy implements MProxy, DataSe
                 throw new IllegalArgumentException("Listener cannot be null");
             listenerManager.removeListener(name, listener, key);
         }
+        
+        public void removeGenericListeners(Object key) {
+			listenerManager.removeListeners(name, key);
+		}
 
-        public void addLocalEntryListener(EntryListener listener) {
+		public void addLocalEntryListener(EntryListener listener) {
             if (listener == null)
                 throw new IllegalArgumentException("Listener cannot be null");
             listenerManager.addLocalListener(name, listener, getInstanceType());

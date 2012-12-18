@@ -131,8 +131,13 @@ public class QProxyImpl extends AbstractQueue implements QProxy, HazelcastInstan
         ensure();
         qproxyReal.removeItemListener(listener);
     }
+    
+    public void removeItemListeners() {
+		ensure();
+		qproxyReal.removeItemListeners();
+	}
 
-    public String getName() {
+	public String getName() {
         return name.substring(Prefix.QUEUE.length());
     }
 
@@ -321,8 +326,12 @@ public class QProxyImpl extends AbstractQueue implements QProxy, HazelcastInstan
         public void removeItemListener(ItemListener listener) {
             blockingQueueManager.removeItemListener(name, listener);
         }
+        
+        public void removeItemListeners() {
+			blockingQueueManager.removeItemListeners(name);
+		}
 
-        public String getName() {
+		public String getName() {
             return QProxyImpl.this.getName();
         }
 

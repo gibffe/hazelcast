@@ -306,6 +306,29 @@ public class ListenerManager extends BaseManager {
             registerListener(name, key, false, false);
         }
     }
+    
+    public void removeListeners(String name, Object key) {
+    	List<ListenerItem> listeners = namedListeners.get(name);
+    	if (listeners == null) return;
+    	for (ListenerItem listenerItem : listeners) {
+    		if (key == null && listenerItem.key == null) {
+    			listeners.remove(listenerItem);
+    		} else if (key != null && key.equals(listenerItem.key)) {
+    			listeners.remove(listenerItem);
+    		}
+    	}
+    	boolean left = false;
+    	for (ListenerItem listenerItem : listeners) {
+    		if (key == null && listenerItem.key == null) {
+    			left = true;
+    		} else if (key != null && key.equals(listenerItem.key)) {
+    			left = true;
+    		}
+    	}
+    	if (!left) {
+    		registerListener(name, key, false, false);
+    	}
+    }
 
     void removeAllRegisteredListeners(String name) {
         namedListeners.remove(name);

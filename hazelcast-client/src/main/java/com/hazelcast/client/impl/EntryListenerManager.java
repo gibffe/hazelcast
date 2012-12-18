@@ -88,6 +88,22 @@ public class EntryListenerManager {
         }
     }
 
+    public Collection<EntryListener> removeListeners(String name) {
+
+    	Collection<EntryListener> removed = null;
+    	
+    	Map<Object, List<EntryListenerHolder>> m = entryListeners.remove(name);
+    	if (m != null) {
+    		removed = new ArrayList<EntryListener>();
+    		for (List<EntryListenerHolder> list : m.values()) {
+    			for (EntryListenerHolder holder : list) {
+    				removed.add(holder.listener);
+    			}
+    		}
+    	}
+    	return removed;
+    }
+    
     public synchronized Boolean noListenerRegistered(Object key, String name, boolean includeValue) {
         final Map<Object, List<EntryListenerHolder>> map = entryListeners.get(name);
         key = toKey(key);

@@ -81,6 +81,13 @@ public class QueueItemListenerManager {
             queueItemListeners.remove(name);
         }
     }
+    
+    public <E> void removeListeners(String name) {
+    	if (!queueItemListeners.containsKey(name)) {
+    		return;
+    	}
+    	queueItemListeners.remove(name);
+    }
 
     public <E> void registerListener(String name, ItemListener<E> listener, boolean includeValue) {
         List<ItemListenerHolder> newListenersList = new CopyOnWriteArrayList<ItemListenerHolder>();

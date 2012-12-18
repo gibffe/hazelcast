@@ -145,8 +145,13 @@ public class SetProxyImpl extends AbstractCollection implements SetProxy, DataSe
         ensure();
         base.removeItemListener(itemListener);
     }
+    
+    public void removeItemListeners() {
+		ensure();
+		base.removeItemListeners();
+	}
 
-    public MProxy getMProxy() {
+	public MProxy getMProxy() {
         ensure();
         return base.getMProxy();
     }
@@ -190,8 +195,12 @@ public class SetProxyImpl extends AbstractCollection implements SetProxy, DataSe
         public void removeItemListener(ItemListener listener) {
             mapProxy.removeGenericListener(listener, null);
         }
+        
+		public void removeItemListeners() {
+			mapProxy.removeGenericListeners(null);
+		}
 
-        public String getName() {
+		public String getName() {
             return SetProxyImpl.this.getName();
         }
 
